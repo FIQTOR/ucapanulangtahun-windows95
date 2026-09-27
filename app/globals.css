@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #00ff00;
+  --desktop-bg: #008080;
+  --window-bg: #c0c0c0;
+  --titlebar-bg: #000080;
+  --border-light: #ffffff;
+  --border-dark: #000000;
+  --border-gray: #808080;
 }
 
 @theme inline {
@@ -12,15 +18,294 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Loading Screen Styles */
+.loading-container {
+  text-align: center;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+}
+
+.loading-text {
+  color: #00ff00;
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  border: 2px solid #00ff00;
+  background: #000;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00, #00cc00);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.loading-subtext {
+  color: #00ff00;
+  font-size: 24px;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+/* Window Styles */
+.window {
+  background: var(--window-bg);
+  border: 2px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  box-shadow:
+    1px 1px 0 var(--border-dark),
+    -1px -1px 0 var(--border-light),
+    1px -1px 0 var(--border-gray),
+    -1px 1px 0 var(--border-gray);
+  max-width: 600px;
+  width: 100%;
+}
+
+.title-bar {
+  background: var(--titlebar-bg);
+  color: white;
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.title-bar-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+}
+
+.window-icon {
+  width: 16px;
+  height: 16px;
+  background: var(--border-light);
+  border: 1px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.icon-content {
+  transform: scale(0.8);
+}
+
+.title-bar-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.title-bar-controls button {
+  width: 16px;
+  height: 14px;
+  background: var(--window-bg);
+  border: 2px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-bar-controls button:hover {
+  background: var(--border-light);
+  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+}
+
+.window-body {
+  padding: 8px;
+  min-height: 400px;
+}
+
+.status-bar {
+  background: var(--window-bg);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-dark);
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+}
+
+/* Content Styles */
+.content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.birthday-title h1 {
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 24px;
+  color: #ff0000;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  text-shadow: 2px 2px 0 #ffff00;
+}
+
+.birthday-subtitle {
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 20px;
+  color: #ff00ff;
+  margin-bottom: 30px;
+}
+
+.message-card {
+  background: var(--border-light);
+  border: 2px solid;
+  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+  padding: 16px;
+  margin-bottom: 30px;
+  box-shadow: inset 1px 1px 0 var(--border-gray), inset -1px -1px 0 var(--border-gray);
+}
+
+.card-title {
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  color: #000080;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #000080;
+  padding-bottom: 8px;
+}
+
+.card-content {
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 18px;
+  color: #000;
+  line-height: 1.4;
+}
+
+.card-content p {
+  margin-bottom: 12px;
+}
+
+.wishes-list {
+  margin-top: 20px;
+}
+
+.wish-item {
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background: #ffff00;
+  border: 1px solid #000;
+  font-size: 16px;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.win-button {
+  background: var(--window-bg);
+  border: 2px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  padding: 8px 16px;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+  box-shadow:
+    1px 1px 0 var(--border-dark),
+    -1px -1px 0 var(--border-light);
+}
+
+.win-button:hover {
+  background: var(--border-light);
+}
+
+.win-button:active {
+  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+  box-shadow:
+    inset 1px 1px 0 var(--border-dark),
+    inset -1px -1px 0 var(--border-light);
+}
+
+.win-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Taskbar Styles */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--window-bg);
+  border-top: 2px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px;
+  z-index: 1000;
+}
+
+.start-button {
+  background: var(--window-bg);
+  border: 2px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  padding: 4px 8px;
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+}
+
+.start-button:hover {
+  background: var(--border-light);
+}
+
+.taskbar-time {
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  color: #000;
+  background: #ffff00;
+  border: 1px solid #000;
+  padding: 2px 6px;
+}
+
+/* Retro effects */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* MS Sans Serif fallback */
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: local('Microsoft Sans Serif'), local('Arial'), sans-serif;
 }
